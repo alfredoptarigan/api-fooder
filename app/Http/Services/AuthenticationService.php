@@ -30,11 +30,20 @@ class AuthenticationService
     {
         $validator = Validator::make($data, [
             'email' => 'required|string|email',
+<<<<<<< HEAD
             'password' => 'required|string',
         ]);
 
         if ($validator->fails()) {
             throw new \InvalidArgumentException($validator->errors()->first());
+=======
+            'password' => 'required|string'
+        ]);
+
+
+        if ($validator->fails()) {
+            throw new \Exception($validator->errors()->first());
+>>>>>>> main
         }
 
         try {
@@ -42,6 +51,11 @@ class AuthenticationService
         } catch (\Exception $e) {
             throw new \InvalidArgumentException($e->getMessage());
         }
+<<<<<<< HEAD
+=======
+
+        return $result;
+>>>>>>> main
     }
 
     public function register($data)
@@ -63,4 +77,18 @@ class AuthenticationService
 
         return $result;
     }
+<<<<<<< HEAD
+=======
+
+    public function profile()
+    {
+        try {
+            $result = $this->repository->profile();
+        } catch (\Exception $e) {
+            throw new \InvalidArgumentException($e->getMessage());
+        }
+
+        return $result;
+    }
+>>>>>>> main
 }

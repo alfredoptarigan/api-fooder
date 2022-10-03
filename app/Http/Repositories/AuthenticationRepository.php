@@ -20,10 +20,19 @@ class AuthenticationRepository
             $user = Auth::user();
 
             $login['user'] = new UserResource($user);
+<<<<<<< HEAD
             $login['token'] = Auth::user()->createToken('Food Court')->acessToken;
 
             return $login;
         }
+=======
+            $login['token'] = Auth::user()->createToken('Food Court')->accessToken;
+
+            return $login;
+        }
+
+        throw new \Exception('Failed Login');
+>>>>>>> main
     }
 
     public function register($data)
@@ -33,6 +42,14 @@ class AuthenticationRepository
             'email' => $data['email'],
             'password' => bcrypt($data['password'])
         ]);
+
+        return new UserResource($user);
+    }
+
+    public function profile()
+    {
+        $user = Auth::user();
+
 
         return new UserResource($user);
     }

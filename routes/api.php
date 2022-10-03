@@ -20,3 +20,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('login', [AuthenticationController::class, 'login']);
     Route::post('register', [AuthenticationController::class, 'register']);
 });
+
+Route::middleware('auth:api')->group(function () {
+    Route::get('user', [AuthenticationController::class, 'profile']);
+});

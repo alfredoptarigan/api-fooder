@@ -13,10 +13,19 @@ class AuthenticationController extends Controller
         'email',
         'password',
     ];
+<<<<<<< HEAD
     private $login = [
         'email',
         'password',
     ];
+=======
+
+    private $requestLogin = [
+        'email',
+        'password',
+    ];
+
+>>>>>>> main
     private $service;
 
     public function __construct(AuthenticationService $service)
@@ -30,10 +39,17 @@ class AuthenticationController extends Controller
 
         try {
             $response = $this->service->login($data);
+<<<<<<< HEAD
             return ResponseJson::success($response);
         } catch (\Exception $e) {
             return ResponseJson::error($e->getMessage());
         }
+=======
+        } catch (\Exception $e) {
+            return ResponseJson::error($e->getMessage());
+        }
+
+>>>>>>> main
         return $response;
     }
 
@@ -48,5 +64,16 @@ class AuthenticationController extends Controller
         }
 
         return ResponseJson::success($result, 'User created successfully');
+    }
+
+    public function profile(Request $request)
+    {
+        try {
+            $result = $this->service->profile();
+        } catch (\Exception $e) {
+            return ResponseJson::error($e->getMessage());
+        }
+
+        return ResponseJson::success($result, "User's profile");
     }
 }
