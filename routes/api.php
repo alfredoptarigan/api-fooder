@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// prefix config
 Route::group(['prefix' => 'auth'], function () {
+    Route::post('login', [AuthenticationController::class, 'login']);
     Route::post('register', [AuthenticationController::class, 'register']);
 });
