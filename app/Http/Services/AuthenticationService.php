@@ -15,7 +15,8 @@ class AuthenticationService
         $this->repository = $repository;
     }
 
-    private function validator($data) {
+    private function validator($data)
+    {
         $validator = Validator::make($data, [
             'name' => 'required|string',
             'email' => 'required|string|email|unique:users',
@@ -25,18 +26,39 @@ class AuthenticationService
         return $validator;
     }
 
+    public function login($data)
+    {
+        $validator = Validator::make($data, [
+            'email' => 'required|string|email',
+            'password' => 'required|string'
+        ]);
+
+
+        if ($validator->fails()) {
+            throw new \Exception($validator->errors()->first());
+        }
+
+        try {
+            $result = $this->repository->login($data);
+        } catch (\Exception $e) {
+            throw new \InvalidArgumentException($e->getMessage());
+        }
+
+        return $result;
+    }
+
     public function register($data)
     {
         $validate = $this->validator($data);
 
-        if($validate->fails()) {
+        if ($validate->fails()) {
             throw new \InvalidArgumentException($validate->errors()->first());
         }
 
         DB::beginTransaction();
         try {
             $result = $this->repository->register($data);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             DB::rollback();
             throw new \InvalidArgumentException($e->getMessage());
         }
@@ -45,4 +67,14 @@ class AuthenticationService
         return $result;
     }
 
+    public function profile()
+    {
+        try {
+            $result = $this->repository->profile();
+        } catch (\Exception $e) {
+            throw new \InvalidArgumentException($e->getMessage());
+        }
+
+        return $result;
+    }
 }
